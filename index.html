@@ -133,11 +133,13 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.4);
             transition: .35s;
             text-align: center;
+            cursor: pointer;
         }
 
         .card:hover {
             transform: scale(1.05);
             box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+            border: 1px solid var(--primary);
         }
 
         .card i {
@@ -224,6 +226,12 @@
             from { transform: scale(0); opacity: 0; }
             to { transform: scale(1); opacity: 1; }
         }
+
+        /* Indicador de card selecionado */
+        .card.selecionado {
+            border: 2px solid #25d366;
+            box-shadow: 0 0 15px rgba(37, 211, 102, 0.5);
+        }
     </style>
 
     <!-- Ícones -->
@@ -251,37 +259,37 @@
         <p>Clique no serviço desejado ou descreva sua necessidade.</p>
 
         <div class="servicos">
-            <div class="card">
+            <div class="card" data-servico="formatacao">
                 <i class="fas fa-desktop"></i>
                 <h3>Formatação de Computador</h3>
                 <p>Instalação limpa do Windows, drivers e otimização.</p>
             </div>
 
-            <div class="card">
+            <div class="card" data-servico="montagem">
                 <i class="fas fa-toolbox"></i>
                 <h3>Montagem de PC</h3>
                 <p>Montagem completa, testes e performance.</p>
             </div>
 
-            <div class="card">
+            <div class="card" data-servico="reparos">
                 <i class="fas fa-laptop-medical"></i>
                 <h3>Reparos</h3>
                 <p>Diagnóstico, limpeza e troca de peças.</p>
             </div>
 
-            <div class="card">
+            <div class="card" data-servico="office">
                 <i class="fas fa-file-word"></i>
                 <h3>Instalação do Office</h3>
                 <p>Instalação e ativação oficiais.</p>
             </div>
 
-            <div class="card">
+            <div class="card" data-servico="otimizacao">
                 <i class="fas fa-shield-virus"></i>
                 <h3>Otimização</h3>
                 <p>Remoção de vírus e lentidões.</p>
             </div>
 
-            <div class="card">
+            <div class="card" data-servico="outros">
                 <i class="fas fa-network-wired"></i>
                 <h3>Outros</h3>
                 <p>Redes, impressoras, backup e mais.</p>
@@ -314,6 +322,43 @@
     <footer>© 2025 – Serviços de TI por Breno Nascimento</footer>
 
     <script>
+        // Dados dos serviços com textos pré-definidos
+        const servicos = {
+            formatacao: "Formatação de Computador\n\nNotebook ou computador?\nModelo:\nSistema operacional atual:\nPrecisa de backup dos arquivos?",
+            montagem: "Montagem de PC\n\nFinalidade do computador (jogos, trabalho, estudo):\nOrçamento disponível:\nJá possui algumas peças?\nPrecisa de recomendação de componentes?",
+            reparos: "Reparos em Computador/Notebook\n\nNotebook ou computador?\nModelo e marca:\nProblema apresentado:\nO equipamento liga? Faz algum barulho?",
+            office: "Instalação do Office\n\nQual versão do Office precisa?\nJá possui a licença?\nÉ para notebook ou computador?\nPrecisa de transferência de arquivos do Office antigo?",
+            otimizacao: "Otimização e Remoção de Vírus\n\nNotebook ou computador?\nEstá muito lento ou com muitos anúncios/pop-ups?\nPossui arquivos importantes para preservar?\nJá tentou algum antivírus?",
+            outros: "Outros Serviços de TI\n\nDescreva qual serviço precisa:\n[Redes, impressoras, configurações, backup, etc.]\n\nEquipamento:\nMarca e modelo:\nProblema ou necessidade específica:"
+        };
+
+        // Adicionar evento de clique aos cards
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Remove a classe 'selecionado' de todos os cards
+                document.querySelectorAll('.card').forEach(c => {
+                    c.classList.remove('selecionado');
+                });
+                
+                // Adiciona a classe 'selecionado' ao card clicado
+                this.classList.add('selecionado');
+                
+                // Obtém o tipo de serviço
+                const servico = this.getAttribute('data-servico');
+                
+                // Preenche a textarea com o texto do serviço selecionado
+                if (servicos[servico]) {
+                    document.getElementById('descricao').value = servicos[servico];
+                    
+                    // Rola a página até o formulário
+                    document.getElementById('contato').scrollIntoView({ 
+                        behavior: 'smooth' 
+                    });
+                }
+            });
+        });
+
+        // Envio do formulário
         document.getElementById("formAtendimento").addEventListener("submit", function(e){
             e.preventDefault();
 
@@ -321,21 +366,28 @@
             const telefone = document.getElementById("telefone").value;
             const descricao = document.getElementById("descricao").value;
 
-            const mensagem = `Olá, meu nome é ${nome}. Meu telefone é ${telefone}. Gostaria de solicitar: ${descricao}`;
+            const mensagem = `*NOVA SOLICITAÇÃO DE SERVIÇO*\n\n*Cliente:* ${nome}\n*Telefone:* ${telefone}\n\n*Serviço solicitado:*\n${descricao}\n\n_Esta mensagem foi enviada através do site._`;
             const url = `https://wa.me/5584994291197?text=${encodeURIComponent(mensagem)}`;
 
             window.open(url, '_blank');
 
             document.getElementById("confirmacaoMsg").style.display = "block";
+            
+            // Limpa o formulário após alguns segundos
+            setTimeout(() => {
+                document.getElementById("formAtendimento").reset();
+                document.getElementById("confirmacaoMsg").style.display = "none";
+                document.querySelectorAll('.card').forEach(c => {
+                    c.classList.remove('selecionado');
+                });
+            }, 5000);
         });
     </script>
 
-<!-- Botão flutuante WhatsApp -->
-<a href="https://wa.me/5584994291197" target="_blank" class="whatsapp-btn">
-    <i class="fab fa-whatsapp"></i>
-</a>
+    <!-- Botão flutuante WhatsApp -->
+    <a href="https://wa.me/5584994291197" target="_blank" class="whatsapp-btn">
+        <i class="fab fa-whatsapp"></i>
+    </a>
 
 </body>
 </html>
-
-
