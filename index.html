@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breno Nascimento – Serviços de TI</title>
+    <style>
+        :root {
+            --bg: #0a1a33;
+            --bg-card: #102544;
+            --text: #ffffff;
+            --primary: #1e90ff;
+            --primary-dark: #187bcd;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        /* MENU FIXO */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--bg-card);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        nav h2 {
+            margin: 0;
+            font-size: 1.4rem;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        nav a {
+            color: var(--text);
+            margin-left: 20px;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: .3s;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        header {
+            padding: 100px 20px 50px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(17, 24, 39, 0.85), rgba(13, 37, 63, 0.85));
+            animation: fadeIn 1.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-bg {
+            background-image: linear-gradient(rgba(10, 26, 51, 0.85), rgba(10, 26, 51, 0.85)), 
+                            url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 80px 20px;
+            border-radius: 15px;
+            margin: 0 auto;
+            max-width: 1200px;
+            position: relative;
+        }
+
+        .hero-bg h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.4);
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+
+        .hero-bg p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+        }
+
+        @media (max-width: 768px) {
+            .hero-bg h1 {
+                font-size: 1.8rem;
+                padding: 8px 15px;
+            }
+            
+            .hero-bg p {
+                font-size: 1rem;
+            }
+        }
+
+        main {
+            max-width: 1000px;
+            margin: 40px auto;
+            background: var(--bg-card);
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+            animation: fadeIn 1.4s ease;
+        }
+
+        .servicos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: #1c2128;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+            transition: .35s;
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+        }
+
+        .card i {
+            font-size: 40px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #444;
+            border-radius: 8px;
+            margin-top: 10px;
+            background: #0d1117;
+            color: var(--text);
+            font-size: 1rem;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 14px 20px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        .confirmacao {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background: #1e3a2f;
+            color: #6aff9c;
+            text-align: center;
+            font-weight: bold;
+            animation: fadeIn .6s ease;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background: #0a3b84;
+            color: #fff;
+        }
+        
+        /* Botão flutuante WhatsApp */
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: #25d366;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 32px;
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+            animation: popIn .7s ease;
+            transition: .3s;
+            z-index: 999;
+        }
+
+        .whatsapp-btn:hover {
+            transform: scale(1.15);
+            background: #1ebe5d;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+    </style>
+
+    <!-- Ícones -->
+    <script src="https://kit.fontawesome.com/a6e0e1b6c7.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <nav>
+        <h2>Breno TI</h2>
+        <div>
+            <a href="#servicos">Serviços</a>
+            <a href="#contato">Contato</a>
+        </div>
+    </nav>
+
+    <header>
+        <div class="hero-bg">
+            <h1>Serviços de TI – Breno Nascimento</h1>
+            <p>Manutenção, suporte, consultoria e soluções profissionais de informática</p>
+        </div>
+    </header>
+
+    <main>
+        <h2 id="servicos">Serviços Disponíveis</h2>
+        <p>Clique no serviço desejado ou descreva sua necessidade.</p>
+
+        <div class="servicos">
+            <div class="card">
+                <i class="fas fa-desktop"></i>
+                <h3>Formatação de Computador</h3>
+                <p>Instalação limpa do Windows, drivers e otimização.</p>
+            </div>
+
+            <div class="card">
+                <i class="fas fa-toolbox"></i>
+                <h3>Montagem de PC</h3>
+                <p>Montagem completa, testes e performance.</p>
+            </div>
+
+            <div class="card">
+                <i class="fas fa-laptop-medical"></i>
+                <h3>Reparos</h3>
+                <p>Diagnóstico, limpeza e troca de peças.</p>
+            </div>
+
+            <div class="card">
+                <i class="fas fa-file-word"></i>
+                <h3>Instalação do Office</h3>
+                <p>Instalação e ativação oficiais.</p>
+            </div>
+
+            <div class="card">
+                <i class="fas fa-shield-virus"></i>
+                <h3>Otimização</h3>
+                <p>Remoção de vírus e lentidões.</p>
+            </div>
+
+            <div class="card">
+                <i class="fas fa-network-wired"></i>
+                <h3>Outros</h3>
+                <p>Redes, impressoras, backup e mais.</p>
+            </div>
+        </div>
+
+        <div class="formulario" id="contato">
+            <h2>Solicitar Atendimento</h2>
+            <p>Seu pedido será enviado diretamente via WhatsApp.</p>
+
+            <form id="formAtendimento">
+                <label>Seu nome:</label>
+                <input id="nome" type="text" required>
+
+                <label>Telefone:</label>
+                <input id="telefone" type="text" required>
+
+                <label>Descrição do serviço:</label>
+                <textarea id="descricao" rows="5" required></textarea>
+
+                <button type="submit">Enviar Solicitação via WhatsApp</button>
+            </form>
+
+            <div class="confirmacao" id="confirmacaoMsg">
+                ✔ Solicitação enviada! Aguarde retorno no WhatsApp.
+            </div>
+        </div>
+    </main>
+
+    <footer>© 2025 – Serviços de TI por Breno Nascimento</footer>
+
+    <script>
+        document.getElementById("formAtendimento").addEventListener("submit", function(e){
+            e.preventDefault();
+
+            const nome = document.getElementById("nome").value;
+            const telefone = document.getElementById("telefone").value;
+            const descricao = document.getElementById("descricao").value;
+
+            const mensagem = `Olá, meu nome é ${nome}. Meu telefone é ${telefone}. Gostaria de solicitar: ${descricao}`;
+            const url = `https://wa.me/5584994291197?text=${encodeURIComponent(mensagem)}`;
+
+            window.open(url, '_blank');
+
+            document.getElementById("confirmacaoMsg").style.display = "block";
+        });
+    </script>
+
+<!-- Botão flutuante WhatsApp -->
+<a href="https://wa.me/5584994291197" target="_blank" class="whatsapp-btn">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+</body>
+</html>
+
+
